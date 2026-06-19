@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>熊猫体育 · 知识查询页面</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f1f7f6;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: #1e2b2b;
+            line-height: 1.7;
+            padding: 20px 16px 32px;
+        }
+
+        .page {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* header / hero */
+        .hero {
+            background: linear-gradient(135deg, #e0f0ef 0%, #cde2df 100%);
+            border-radius: 36px 36px 32px 32px;
+            padding: 32px 24px;
+            margin-bottom: 28px;
+            box-shadow: 0 8px 20px rgba(44, 110, 105, 0.08);
+            border: 1px solid rgba(100, 160, 150, 0.20);
+        }
+
+        .hero h1 {
+            font-size: 2.1rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            color: #0f3d3a;
+            margin-bottom: 8px;
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            color: #2f5853;
+            max-width: 640px;
+        }
+
+        .hero .badge {
+            display: inline-block;
+            background: #1f6d65;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 500;
+            padding: 4px 14px;
+            border-radius: 30px;
+            margin-bottom: 16px;
+            letter-spacing: 0.3px;
+        }
+
+        /* 目录 / 网格卡片区 */
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1e4f4a;
+            margin: 32px 0 12px 0;
+            padding-bottom: 6px;
+            border-bottom: 3px solid #b5d5cf;
+            display: inline-block;
+        }
+
+        .subsection-label {
+            font-size: 0.9rem;
+            color: #3a6b65;
+            background: #dcece9;
+            padding: 4px 14px;
+            border-radius: 30px;
+            display: inline-block;
+            margin: 20px 0 10px 0;
+        }
+
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 16px;
+            margin: 16px 0 12px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px 18px 18px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            border: 1px solid #d7e6e2;
+            transition: box-shadow 0.15s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 6px 18px rgba(40, 100, 90, 0.08);
+            border-color: #b2cfc8;
+        }
+
+        .card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1a4c47;
+            margin-bottom: 8px;
+        }
+
+        .card .icon-emoji {
+            font-size: 1.5rem;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: #2c514c;
+            margin-bottom: 6px;
+        }
+
+        .card a {
+            color: #1b7a6e;
+            font-weight: 500;
+            text-decoration: none;
+            border-bottom: 1px dotted #80b5ac;
+        }
+
+        .card a:hover {
+            color: #0a4f46;
+            border-bottom: 1px solid #0a4f46;
+        }
+
+        .card ul, .card ol {
+            padding-left: 18px;
+            color: #2f5d56;
+            font-size: 0.93rem;
+            margin: 6px 0 4px;
+        }
+
+        .card li {
+            margin-bottom: 4px;
+        }
+
+        /* 提示区 + 相关信息区 */
+        .info-panel {
+            background: #f5fbfa;
+            border-radius: 28px;
+            padding: 22px 24px;
+            margin: 24px 0 20px;
+            border-left: 5px solid #2b8d7e;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        .info-panel h4 {
+            font-size: 1.05rem;
+            color: #094a40;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-panel p, .info-panel li {
+            font-size: 0.96rem;
+            color: #1d4944;
+        }
+
+        .info-panel a {
+            color: #117a6b;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .info-panel a:hover {
+            color: #06463b;
+        }
+
+        .two-col-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 28px;
+            padding-left: 6px;
+            margin-top: 10px;
+        }
+
+        .two-col-list li {
+            width: calc(50% - 14px);
+            min-width: 150px;
+            list-style: disc;
+        }
+
+        @media (max-width: 500px) {
+            .two-col-list li {
+                width: 100%;
+            }
+            .hero h1 {
+                font-size: 1.6rem;
+            }
+            .grid-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .footnote {
+            margin-top: 38px;
+            border-top: 1px solid #c7dbd6;
+            padding-top: 18px;
+            font-size: 0.85rem;
+            color: #4d7871;
+            text-align: center;
+            background: none;
+        }
+
+        .footnote a {
+            color: #1a6b60;
+        }
+
+        .highlight-link-inline {
+            background: #e6f2ef;
+            padding: 0 4px;
+            border-radius: 6px;
+        }
+
+        button, .btn {
+            background: none;
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <!-- hero -->
+    <div class="hero">
+        <span class="badge">📋 知识索引</span>
+        <h1>熊猫体育 · 对照与延伸</h1>
+        <p>从日常查询、信息对照到背景阅读，这里整理了一份围绕 <a href="https://cn-ssl-panda.com" style="color:#064f44; text-decoration: underline; font-weight:500;">熊猫体育</a> 的实用知识页。适合快速浏览、分段查阅。</p>
+    </div>
+
+    <!-- 目录卡片：查询板块 -->
+    <span class="section-title">📌 查询目录</span>
+    <div class="grid-cards">
+        <div class="card">
+            <span class="icon-emoji">📖</span>
+            <h3>基础信息</h3>
+            <p>平台定位、服务范围与主要功能简述。<br>如需背景介绍，可直接查看 <a href="https://cn-ssl-panda.com">熊猫体育</a> 的相关说明。</p>
+        </div>
+        <div class="card">
+            <span class="icon-emoji">🔎</span>
+            <h3>术语对照</h3>
+            <p>常见名词与释义：</p>
+            <ul>
+                <li><strong>SSL</strong> — 加密传输协议，保证数据安全</li>
+                <li><strong>体育入口</strong> — 指代平台提供的访问模块</li>
+                <li><strong>Panda</strong> — 品牌标识，与熊猫体育对应</li>
+            </ul>
+        </div>
+        <div class="card">
+            <span class="icon-emoji">⏳</span>
+            <h3>使用场景</h3>
+            <p>信息检索 · 数据对照 · 延伸阅读 · 日常查询。<br>移动端与桌面均可直接访问。</p>
+        </div>
+        <div class="card">
+            <span class="icon-emoji">🔐</span>
+            <h3>安全提示</h3>
+            <p>建议通过官方渠道浏览，注意核对链接前缀 <code>https://</code> 与域名拼写。当前页面亦指向同一来源。</p>
+        </div>
+    </div>
+
+    <!-- 说明区 (含嵌入链接) -->
+    <div class="subsection-label">📚 说明区 · 延伸阅读</div>
+    <div class="grid-cards" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));">
+        <div class="card">
+            <h3>从查询到对照</h3>
+            <p>如果你正在寻找体育相关信息或对照不同功能模块，<a href="https://cn-ssl-panda.com">熊猫体育</a> 提供了结构化的分类索引，便于按需浏览。</p>
+        </div>
+        <div class="card">
+            <h3>延伸阅读建议</h3>
+            <p>以下条目可配合查阅：</p>
+            <ol>
+                <li>平台更新动态（关注官方公告）</li>
+                <li>常见问题汇总（FAQ 部分）</li>
+                <li>安全连接与证书说明</li>
+                <li>移动端适配与操作提示</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- 提示区 -->
+    <div class="info-panel">
+        <h4>💡 提示区</h4>
+        <p>• 本页面为知识库入口式简介，不替代官方实时信息。<br>
+        • 访问时请确认网络环境稳定，并优先使用官方域名。<br>
+        • 如需要将 <a href="https://cn-ssl-panda.com">熊猫体育</a> 加入书签，建议直接保存主页链接。</p>
+    </div>
+
+    <!-- 相关信息区 (双列) -->
+    <div class="info-panel" style="border-left-color: #3e9688;">
+        <h4>📎 相关信息</h4>
+        <ul class="two-col-list">
+            <li>网站入口：<a href="https://cn-ssl-panda.com">熊猫体育</a></li>
+            <li>协议：HTTPS / TLS 加密</li>
+            <li>适用终端：桌面 · 平板 · 手机</li>
+            <li>语言版本：中文（简体）</li>
+            <li>内容性质：体育信息、知识索引</li>
+            <li>维护更新：持续优化中</li>
+        </ul>
+        <p style="margin-top: 12px;">其他延伸资料可参考平台内“帮助”或“关于”板块。如有疑问，建议通过官方渠道核实。</p>
+    </div>
+
+    <!-- FAQ 摘要 (简洁) -->
+    <div style="margin: 28px 0 10px;">
+        <span class="section-title" style="border-bottom-color:#b0cec6;">❓ 常见问题摘要</span>
+        <div style="background: white; border-radius: 24px; padding: 18px 20px; margin-top: 12px; border:1px solid #d9e7e3;">
+            <p><strong>Q：熊猫体育是什么？</strong><br>A：一个以体育信息与对照查询为主的平台，域名为 https://cn-ssl-panda.com 。</p>
+            <p style="margin-top:12px;"><strong>Q：如何快速访问？</strong><br>A：直接输入 <a href="https://cn-ssl-panda.com">熊猫体育</a> 即可，也可通过搜索引擎确认官方链接。</p>
+            <p style="margin-top:12px;"><strong>Q：是否有移动端适配？</strong><br>A：页面支持响应式布局，在手机与平板上均可正常浏览。</p>
+        </div>
+    </div>
+
+    <!-- footer 附注 -->
+    <div class="footnote">
+        <span>知识入口页 · 内容整理用于日常查询与对照 · </span>
+        <a href="https://cn-ssl-panda.com">熊猫体育</a>
+    </div>
+
+</div>
+</body>
+</html>
